@@ -1,0 +1,125 @@
+--------------------------------------------------
+-- HELL MODE SCRIPT by smile x tuffmu
+--------------------------------------------------
+
+-- Caption DOORS gốc
+pcall(function()
+	require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game)
+		.caption("HELL MODE SCRIPT BY SMILE X TUFFMU", true)
+end)
+
+--------------------------------------------------
+-- Sprint
+--------------------------------------------------
+pcall(function()
+	loadstring(game:HttpGet(
+		"https://raw.githubusercontent.com/trungdepth-dot/Sprint-stamina-v2/refs/heads/main/Sprint",
+		true
+	))()
+end)
+
+--------------------------------------------------
+-- Hell Mode + Impossible Mode
+--------------------------------------------------
+pcall(function()
+	loadstring(game:HttpGet(
+		"https://raw.githubusercontent.com/lelele78/Securityproject/refs/heads/main/Impossible"
+	))()
+end)
+
+pcall(function()
+	loadstring(game:HttpGet(
+		"https://raw.githubusercontent.com/smilepro593/Hell-mode/refs/heads/main/Hellmoderemakev2.main"
+	))()
+end)
+
+--------------------------------------------------
+-- ENTITY LINKS (FULL ENTITY BẠN GỬI)
+--------------------------------------------------
+local Entities = {
+	"https://raw.githubusercontent.com/Junbbinopro/Bluyer-entity/refs/heads/main/Bluyer",
+	"https://raw.githubusercontent.com/eoyoustme/ohh/refs/heads/main/Draft1",
+	"https://raw.githubusercontent.com/talales/Nhankg./refs/heads/main/Fluster",
+	"https://raw.githubusercontent.com/Junbbinopro/Trauma-entity/refs/heads/main/Trauma",
+	"https://raw.githubusercontent.com/eoyoustme/ohh/refs/heads/main/Torment12",
+	"https://raw.githubusercontent.com/Junbbinopro/Munci-entity/refs/heads/main/Munci-20",
+	"https://raw.githubusercontent.com/Junbbinopro/Hungerd/refs/heads/main/Entity",
+	"https://raw.githubusercontent.com/trungdepth-dot/Him-entity-doors/refs/heads/main/Him",
+	"https://raw.githubusercontent.com/Idk-lol2/a-60aa/refs/heads/main/---===== a-60 agresiv spawner =====---.txt",
+	"https://raw.githubusercontent.com/Junbbinopro/Black-smile/refs/heads/main/Black",
+	"https://raw.githubusercontent.com/Junbbinopro/350-entity/refs/heads/main/350",
+	"https://raw.githubusercontent.com/eoyoustme/rebouna/refs/heads/main/Ripper%20old2",
+	"https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Detph"
+}
+
+--------------------------------------------------
+-- KIỂM TRA CỬA (>=10)
+--------------------------------------------------
+local function CanSpawn()
+	local stats = game.ReplicatedStorage:FindFirstChild("GameStats")
+	if not stats then return false end
+
+	local door = stats:FindFirstChild("LatestRoom")
+	if not door then return false end
+
+	return door.Value >= 10
+end
+
+--------------------------------------------------
+-- LOGIC SỐ LƯỢNG SPAWN
+--------------------------------------------------
+local function GetSpawnCount()
+	local r = math.random()
+
+	if r <= 0.000000001 then
+		return math.random(3, 5) -- siêu hiếm
+	elseif r <= 0.005 then
+		return 2 -- 0.5%
+	else
+		return 1 -- mặc định
+	end
+end
+
+--------------------------------------------------
+-- SPAWN ENTITY
+--------------------------------------------------
+task.spawn(function()
+	while true do
+		task.wait(math.random(60, 120))
+
+		if not CanSpawn() then
+			continue
+		end
+
+		local count = GetSpawnCount()
+
+		for i = 1, count do
+			task.spawn(function()
+				local link = Entities[math.random(#Entities)]
+				pcall(function()
+					loadstring(game:HttpGet(link))()
+				end)
+			end)
+			task.wait(0.6)
+		end
+	end
+end)
+
+--------------------------------------------------
+-- CEASE ENTITY
+--------------------------------------------------
+task.spawn(function()
+	while true do
+		task.wait(math.random(180, 300))
+
+		if not CanSpawn() then
+			continue
+		end
+
+		pcall(function()
+			loadstring(game:HttpGet(
+				"https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V2/Source.lua"
+			))()
+		end)
+	end
+end)
